@@ -69,7 +69,7 @@ COVID-19 팬데믹 동안 각국 정부와 보건 기구는 백신 접종을 팬
 
 사이트별 데이터의 분포와 규모는 다음 그림과 같이 정리하였다.
 
-![사이트별 데이터 분포](images/site_distribution.png)
+![플랫폼 비율 파이 차트](image/Reddit.png)
 
 크롤링은 각 사이트에 맞는 방식으로 진행하였다. Reddit의 경우 PRAW 라이브러리를 이용해 API 기반으로 데이터를 수집하였다. 먼저 Reddit API 계정을 통해 client_id, client_secret, user_agent를 발급받아 클라이언트를 초기화한 뒤, 코로나와 백신 논쟁이 활발했던 서브레딧을 선정하였다. 이어서 `subreddit.top(time_filter="all", limit=POST_LIMIT)`와 같은 메서드를 사용해 상위 게시글을 가져오고, `submission.comments.replace_more(limit=None)` 호출 이후 `submission.comments.list()`로 대댓글까지 포함한 전체 댓글 트리를 평탄화하여 수집하였다. 이 과정에서 `[deleted]`, `[removed]` 등 삭제된 댓글은 수집 단계에서 1차적으로 제외하였다. 또한 `created_utc` 필드를 사람이 읽기 쉬운 날짜·시각 형식의 `created_at`으로 변환해 CSV 형태로 저장하였다.
 
@@ -138,7 +138,7 @@ WebMD, HealthBoards, Drugs.com의 경우에는 requests와 BeautifulSoup를 이�
 
 Epoch별 학습 곡선을 시각화하면 다음과 같다.
 
-![DeBERTa 학습 곡선](images/deberta_epoch_acc_loss.png)
+![Epoch 학습 정확도/ 검증 정확도](image/AA.png)
 
 대표적인 학습 로그는 다음 표와 같다.
 
@@ -166,7 +166,8 @@ DeBERTa v3 Binary 모델을 전체 데이터에 적용한 뒤, 사이트별 감�
 
 부정 비율의 시계열은 다음과 같이 시각화하였다.
 
-![부정 비율 시계열](images/neg_ratio_timeseries.png)
+
+![긍/부정 비율](image/B.png)
 
 또한 외부 지표인 Fear & Greed Index를 `FEAR_INDEX.csv`에서 불러와 부정 비율 시계열과 날짜 기준으로 병합한 뒤, 상관 분석과 Dynamic Time Warping(DTW)을 이용한 유사도 분석을 수행하였다. 공포 지수가 극단적으로 높아지는 구간에서 백신 관련 부정 비율도 함께 상승하는 경향이 관찰되었지만, 두 시계열이 완전히 동일하게 움직이기보다는 특정 사건 이후 단기적인 스파이크가 더 잘 드러났다. 단순 상관계수 하나로 요약하기에는 한계가 있어, 시간 지연(lag)을 고려할 수 있는 DTW 기반 비교가 더 적절한 도구로 보였다.
 
