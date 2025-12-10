@@ -19,7 +19,7 @@
 
 프로젝트의 전체 흐름은 다음 그림과 같이 요약할 수 있다.
 
-![파이프라인 개요](images/pipeline_overview.png)
+![파이프라인 개요](images/pipe.png)
 
 ---
 
